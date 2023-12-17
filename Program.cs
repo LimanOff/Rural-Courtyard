@@ -14,11 +14,13 @@ namespace RuralCourtyard
 
             builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(dbConnectionString));
 
+            builder.Services.AddControllersWithViews();
+
             var app = builder.Build();
 
             app.UseStaticFiles();
 
-            app.MapGet("/", () => "Hello World!");
+            app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}");
 
             app.Run();
         }

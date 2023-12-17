@@ -1,0 +1,35 @@
+﻿<DOCTYPE html>
+    <html>
+    <head>
+        <title> Сельский дворик | @ViewBag.Title</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/Style.css" />
+    </head>
+    <body>
+        <div class="Grid">
+            <header>
+                <div class="Header-title">
+                        <h1 class="TitleOfStore">Сельский дворик</h1>
+                </div>
+
+                @if (Program.CurrentUser == null)
+                {
+                    <div class="Header-buttons">
+                        <a> <img src="~/img/icons/Cart.svg" /> </a>
+                        <a> <img src="~/img/icons/Favorites.svg" /> </a>
+
+                        <a> <img class="LogOut-button" src="~/img/icons/LogOut.png" /> </a>
+                    </div>
+                }
+            </header>
+
+            <div class="GridBody">
+                @RenderBody()
+            </div>
+
+            <footer>
+                <h5>Copyright 2023 - 2023 Алина Позова. Все права защищены.</h5>
+            </footer>
+        </div>
+    </body>
+</html>
