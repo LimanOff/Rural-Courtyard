@@ -4,6 +4,11 @@
     margin: 0;
 }
 
+body {
+    background-image: url("../img/background-images/Background.png");
+    background-size: cover;
+}
+
 .Grid {
     display: grid;
     grid-template-rows: 50px 1fr 50px;
@@ -15,7 +20,7 @@
     height: 100vh;
     width: 100vw;
 }
-.GridBody{
+.GridBody {
     grid-area: body;
 }
 
@@ -25,11 +30,11 @@ footer {
     display: flex;
     align-items: center;
 }
-    footer > h5 {
-        font-size: 12px;
-        color: white;
-        margin-left: 50px;
-    }
+footer > h5 {
+    font-size: 12px;
+    color: white;
+    margin-left: 50px;
+}
 
 header {
     background: #69776E;
@@ -37,28 +42,109 @@ header {
     display: flex;
     align-items: center;
 }
-    header .Header-title {
-        margin-left: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+header .Header-title {
+    margin-left: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Header-title .TitleOfStore {
+    color: #FFF;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+header .Header-buttons {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Header-buttons * {
+    margin-right: 50px;
+}
+.Header-buttons img {
+    width: 40px;
+}
+
+.RegAuthForm {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.Form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 75px;
+    width: 500px;
+    height: 350px;
+    background: rgba(217, 217, 217, 0.80);
+}
+.Form > input {
+    margin-top: 50px;
+    text-align: center;
+    width: 250px;
+}
+.RegAuthForm > input {
+    margin-top: 50px;
+    text-align: center;
+    width: 250px;
+}
+
+.btn-sample {
+    color: #ffffff;
+    background-color: #295430;
+    border-color: #295430;
+    border-radius: 75px;
+}
+
+    .btn-sample:hover,
+    .btn-sample:focus,
+    .btn-sample:active,
+    .btn-sample.active,
+    .open .dropdown-toggle.btn-sample {
+        color: #ffffff;
+        background-color: #295430;
+        border-color: #295430;
     }
-        .Header-title .TitleOfStore {
-                color: #FFF;
-                font-size: 35px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-            }
-    header .Header-buttons{
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+    .btn-sample:active,
+    .btn-sample.active,
+    .open .dropdown-toggle.btn-sample {
+        background-image: none;
     }
-        .Header-buttons *{
-            margin-right: 50px;
-        }
-        .Header-buttons img {
-            width: 40px;
-        }
+
+    .btn-sample.disabled,
+    .btn-sample[disabled],
+    fieldset[disabled] .btn-sample,
+    .btn-sample.disabled:hover,
+    .btn-sample[disabled]:hover,
+    fieldset[disabled] .btn-sample:hover,
+    .btn-sample.disabled:focus,
+    .btn-sample[disabled]:focus,
+    fieldset[disabled] .btn-sample:focus,
+    .btn-sample.disabled:active,
+    .btn-sample[disabled]:active,
+    fieldset[disabled] .btn-sample:active,
+    .btn-sample.disabled.active,
+    .btn-sample[disabled].active,
+    fieldset[disabled] .btn-sample.active {
+        background-color: #295430;
+        border-color: #295430;
+    }
+
+    .btn-sample .badge {
+        color: #295430;
+        background-color: #ffffff;
+    }
+
+a {
+    color: #FFFFFF;
+}
+a:hover {
+    color: #295430;
+}

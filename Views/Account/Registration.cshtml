@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Регистрация";
+}
+<form class="RegAuthForm" asp-action="Registration" method="post">
+    <div class="Form">
+        <h1>Регистрация</h1>
+
+        <input name="login" class="form-control" type="text" placeholder="Логин" />
+        <input name="password" class="form-control" type="text" placeholder="Пароль" />
+    </div>
+
+    <input class="btn btn-sample mt-5" type="submit" value="Зарегистрироваться" />
+    <a class="mt-5" asp-action="Authorization">Вы зарегистрированы?</a>
+</form>
+

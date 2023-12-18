@@ -4,6 +4,7 @@
         <title> Сельский дворик | @ViewBag.Title</title>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/Style.css" />
+        <link rel="icon" type="image/x-icon" href="/img/icons/Logo.png">
     </head>
     <body>
         <div class="Grid">
@@ -12,13 +13,19 @@
                         <h1 class="TitleOfStore">Сельский дворик</h1>
                 </div>
 
-                @if (Program.CurrentUser == null)
+                @if (Program.CurrentUser != null)
                 {
                     <div class="Header-buttons">
                         <a> <img src="~/img/icons/Cart.svg" /> </a>
                         <a> <img src="~/img/icons/Favorites.svg" /> </a>
 
-                        <a> <img class="LogOut-button" src="~/img/icons/LogOut.png" /> </a>
+                        <a asp-controller="Account" asp-action="LogOut"> <img class="LogOut-button" src="~/img/icons/LogOut.png" /> </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="Header-buttons">
+                        <a asp-controller="Account" asp-action="LogIn"> <input class="btn btn-sample" value="Войти" /> </a>
                     </div>
                 }
             </header>
