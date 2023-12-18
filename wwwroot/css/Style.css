@@ -142,9 +142,14 @@ header .Header-buttons {
         background-color: #ffffff;
     }
 
-a {
+.super-a {
     color: #FFFFFF;
 }
-a:hover {
+.super-a:hover {
     color: #295430;
+}
+
+a, a:hover{
+    text-decoration: none;
+    color: black !important; 
 }
