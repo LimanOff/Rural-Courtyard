@@ -1,0 +1,27 @@
+﻿@model List<RuralCourtyard.Models.Infrastructure.Product>
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Продукты";
+}
+<div class="Body">
+    <div class="UpBody">
+          <form method="post" asp-controller="Product" asp-action="SearchProduct">
+              <input class="form-control" name="productName" type="text"/>
+              <input type="image" src="/img/icons/Magnifying-glass.svg"/>
+          </form> 
+    </div>
+    <div class="OtherBody">
+        <div class="products">
+            @foreach (var product in Model)
+            {
+                <form class ="product-item m-3" asp-controller="Product" asp-action="ProductInfo">
+                    <input name="productName" class="form-control form-control-sm" type="hidden" value="@product.Name" />
+                    <img src="/img/products/roses/@product.ImageLink" />
+                    <h4>@product.Name</h4>
+                    <input type="submit" value="Открыть">
+                </form>
+            }
+        </div>
+    </div>
+</div>

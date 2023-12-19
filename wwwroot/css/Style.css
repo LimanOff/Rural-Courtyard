@@ -119,6 +119,19 @@ header .Header-buttons {
     align-items: center;
 }
 
+.UpBody{
+    display: inline-block;
+}
+.UpBody > form{
+    display: inline-flex;
+}
+.OtherBody{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn-sample {
     color: #ffffff;
     background-color: #295430;
@@ -180,4 +193,24 @@ a, a:hover{
 
 span{
     font-weight: bold;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    width: 700%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.product-item {
+    margin: 50px;
+    width: 220px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-item > img{
+    width: 150px;
 }

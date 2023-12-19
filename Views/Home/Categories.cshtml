@@ -9,7 +9,7 @@
     <div class="AutoHeightForm">
         @foreach (var category in Model.Categories)
         {
-            <form asp-action="Products">
+            <form asp-controller="Product" asp-action="Products">
                 <input name="nameOfCategory" hidden class="form-control form-control-sm" value="@category.Name" type="text" />
                 <input class="mt-5 mb-5 btn-sample lead" type="submit" value="@category.Name">
             </form>

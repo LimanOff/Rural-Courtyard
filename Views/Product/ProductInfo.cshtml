@@ -1,0 +1,9 @@
+﻿@model RuralCourtyard.Models.Infrastructure.Product;
+
+@{
+    ViewBag.Title = $"{Model.Name}";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ИНФОРМАЦИЯ О ПРОДУКТЕ @Model.Name</h1>
+<input type="button" onclick="window.history.go(-1); return false;" value="Назад"/>

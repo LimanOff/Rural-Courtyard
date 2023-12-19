@@ -16,16 +16,6 @@ namespace RuralCourtyard.Controllers
         [HttpGet]
         public IActionResult Index() => View();
 
-        public IActionResult Products(string nameOfCategory)
-        {
-            var category = _context.Categories.First(x => x.Name == nameOfCategory);
-
-            List<Product> products = _context.Products.Include(p => p.Category)
-                                                        .Where(p => p.Category == category)
-                                                        .ToList();
-            return View(products);
-        }
-
         [HttpGet]
         public IActionResult Cart() => View(_context);
 
