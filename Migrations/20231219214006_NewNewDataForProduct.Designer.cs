@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RuralCourtyard.Models.Infrastructure;
 
@@ -10,9 +11,11 @@ using RuralCourtyard.Models.Infrastructure;
 namespace RuralCourtyard.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231219214006_NewNewDataForProduct")]
+    partial class NewNewDataForProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,16 +187,6 @@ namespace RuralCourtyard.Migrations
                         new
                         {
                             Id = 7,
-                            CategoryId = 1,
-                            Color = "red",
-                            Cost = 300m,
-                            Description = "Зимостойкое, устойчивое к болезням кустистое растение с чашевидными ярко-розовыми цветками диаметром 8–10 см. Цвести роза начинает рано (в начале лета) и продолжает благоухать до поздней осени. В аромате чувствуются тонкие нотки меда и миндаля.Почва: Розы любят нейтральный (рН 6), богатый гумусом, умеренно-влажный и рыхлый грунт.Место посадки: Пионовидные розы предпочитают полутень. При этом участок должен освещаться солнечными лучам не менее 3 часов в сутки. Под большими деревьями или на северной стороне здания растение цвести практически не будет.Подкормка: Пионовидным розам требуются минеральные удобрения, содержащие азот, фосфор, калий, магний, железо и микроэлементы. В первой половине лета вносите азотные удобрения, в период формирования бутонов — фосфор и калий, свежий навоз.Цветение: зацветают в конце мая–начале июня. ",
-                            ImageLink = "mary-rose.png",
-                            Name = "Мэри роуз"
-                        },
-                        new
-                        {
-                            Id = 8,
                             CategoryId = 1,
                             Color = "red",
                             Cost = 300m,
