@@ -20,7 +20,7 @@ namespace RuralCourtyard
 
             app.UseStaticFiles();
 
-            app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}");
+            app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Contacts}");
 
             app.Run();
         }

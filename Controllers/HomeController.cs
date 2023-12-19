@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RuralCourtyard.Models.Infrastructure;
 
 namespace RuralCourtyard.Controllers
@@ -20,5 +21,7 @@ namespace RuralCourtyard.Controllers
 
         [HttpGet]
         public IActionResult Favorites() => View();
+        [HttpGet]
+        public IActionResult Contacts() => View();
     }
 }
