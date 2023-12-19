@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public User User { get; set; }
-        public List<Product> Products { get; set; }
+        public Product Product { get; set; }
+        public int ProductId { get; set; }
     }
 }
