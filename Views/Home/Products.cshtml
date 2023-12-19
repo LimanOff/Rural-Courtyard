@@ -1,0 +1,11 @@
+﻿@model List<RuralCourtyard.Models.Infrastructure.Product>
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Продукты";
+}
+
+@foreach(var product in Model)
+{
+    <h1>@product.Name</h1>
+}

@@ -1,7 +1,7 @@
 ﻿<DOCTYPE html>
     <html>
     <head>
-        <title> Сельский дворик | @ViewBag.Title</title>
+        <title> @ViewBag.Title | Сельский дворик</title>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/Style.css" />
         <link rel="icon" type="image/x-icon" href="/img/icons/Logo.png">
@@ -18,7 +18,7 @@
                     <div class="Header-buttons">
                         <a> <img src="~/img/icons/Cart.svg" /> </a>
                         <a> <img src="~/img/icons/Favorites.svg" /> </a>
-
+                        <a class="super-a" asp-controller="Home" asp-action="Categories">Категории</a>
                         <a class="super-a" asp-controller="Home" asp-action="Contacts">Контакты</a>
                         <a asp-controller="Account" asp-action="LogOut"> <img class="LogOut-button" src="~/img/icons/LogOut.png" /> </a>
                     </div>

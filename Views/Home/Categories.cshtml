@@ -1,0 +1,18 @@
+﻿@model RuralCourtyard.Models.Infrastructure.DatabaseContext;
+
+@{
+    ViewBag.Title = "Категории";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="Body">
+    <div class="AutoHeightForm">
+        @foreach (var category in Model.Categories)
+        {
+            <form asp-action="Products">
+                <input name="nameOfCategory" hidden class="form-control form-control-sm" value="@category.Name" type="text" />
+                <input class="mt-5 mb-5 btn-sample lead" type="submit" value="@category.Name">
+            </form>
+        }
+    </div>
+</div>

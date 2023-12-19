@@ -16,11 +16,25 @@ namespace RuralCourtyard.Controllers
         [HttpGet]
         public IActionResult Index() => View();
 
-        [HttpGet]
-        public IActionResult Cart() => View();
+        public IActionResult Products(string nameOfCategory)
+        {
+            var category = _context.Categories.First(x => x.Name == nameOfCategory);
+
+            List<Product> products = _context.Products.Include(p => p.Category)
+                                                        .Where(p => p.Category == category)
+                                                        .ToList();
+            return View(products);
+        }
 
         [HttpGet]
-        public IActionResult Favorites() => View();
+        public IActionResult Cart() => View(_context);
+
+        [HttpGet]
+        public IActionResult Favorites() => View(_context);
+
+        [HttpGet]
+        public IActionResult Categories() => View(_context);
+
         [HttpGet]
         public IActionResult Contacts() => View();
     }

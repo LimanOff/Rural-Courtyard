@@ -6,7 +6,7 @@
 
 body {
     background-image: url("../img/background-images/Background.png");
-    background-size: cover;
+    background-size: initial;
 }
 
 .Grid {
@@ -74,6 +74,17 @@ header .Header-buttons {
     justify-content: center;
     align-items: center;
 }
+
+.AutoHeightForm {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 75px;
+    width: 500px;
+    height: auto;
+    background: rgba(217, 217, 217, 0.80);
+}
 .Form {
     display: flex;
     flex-flow: column;
@@ -101,11 +112,18 @@ header .Header-buttons {
     align-items: center;
 }
 
+.Body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .btn-sample {
     color: #ffffff;
     background-color: #295430;
     border-color: #295430;
-    border-radius: 75px;
+    border-radius: 5px;
 }
 
     .btn-sample:hover,
