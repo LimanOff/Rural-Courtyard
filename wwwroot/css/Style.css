@@ -95,6 +95,12 @@ header .Header-buttons {
     width: 250px;
 }
 
+.IndexBody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn-sample {
     color: #ffffff;
     background-color: #295430;
