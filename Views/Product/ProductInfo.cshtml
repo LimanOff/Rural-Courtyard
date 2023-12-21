@@ -33,7 +33,7 @@
     <div class="Body">
         <img src="~/img/products/@Model.Product.ImageLink" />
         <div class="AutoHeightAndWidthForm mt-5">
-            <h5>Цена: @Model.Product.Cost рублей</h5>
+            <h5>Цена: @Model.Product.Cost.ToString("0 рублей")</h5>
         </div>
     </div>
     <div class="AutoHeightAndWidthForm ms-5 me-auto">
