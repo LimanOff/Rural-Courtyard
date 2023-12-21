@@ -17,10 +17,18 @@ namespace RuralCourtyard.Controllers
         public IActionResult Index() => View();
 
         [HttpGet]
-        public IActionResult Cart() => View(_context);
+        public IActionResult Cart()
+        {
+            List<Cart> carts = _context.Carts.Include(x => x.Product).ToList();
+            return View(carts);
+        }
 
         [HttpGet]
-        public IActionResult Favorites() => View(_context);
+        public IActionResult Favorites()
+        {
+            List<Favorites> favorites = _context.Favorites.Include(x => x.Product).ToList();
+            return View(favorites);
+        }
 
         [HttpGet]
         public IActionResult Categories() => View(_context);
