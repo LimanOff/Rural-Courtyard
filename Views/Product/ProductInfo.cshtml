@@ -1,9 +1,48 @@
-﻿@model RuralCourtyard.Models.Infrastructure.Product;
+﻿@model RuralCourtyard.Views.ProductController.ProductInfoModel;
 
 @{
-    ViewBag.Title = $"{Model.Name}";
+    ViewBag.Title = $"{Model.Product.Name}";
     Layout = "/Views/Shared/_Layout.cshtml";
-}
 
-<h1>ИНФОРМАЦИЯ О ПРОДУКТЕ @Model.Name</h1>
-<input type="button" onclick="window.history.go(-1); return false;" value="Назад"/>
+    var carts = Model.Context.Carts.ToList();
+    var favorites = Model.Context.Favorites.ToList();
+
+    bool isInCart = carts.FirstOrDefault(x => x.Product == Model.Product) != null;
+    bool isInFavorites = favorites.FirstOrDefault(x => x.Product == Model.Product) != null;
+
+    string valueForBuyButton = isInCart ? "Удалить из корзины" : "Добавить в корзину";
+    string valueForAspAction = isInCart ? "RemoveFromCart" : "AddToCart";
+}
+<div class="IndexBody">
+    <div class="Body m-auto me-5">
+        <input type="image" src="/img/icons/Back.svg" onclick="window.history.go(-1); return false;" />
+        @if (isInFavorites)
+        {
+            <form asp-action="RemoveFromFavorite">
+                <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
+                <input type="image" src="/img/icons/Fill-Heart.svg" />
+            </form>
+        }
+        else
+        {
+            <form asp-action="AddToFavorite">
+                <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
+                <input type="image" src="/img/icons/Empty-Heart.svg" />
+            </form>
+        }
+    </div>
+    <div class="Body">
+        <img src="~/img/products/@Model.Product.ImageLink" />
+        <div class="AutoHeightAndWidthForm mt-5">
+            <h5>Цена: @Model.Product.Cost рублей</h5>
+        </div>
+    </div>
+    <div class="AutoHeightAndWidthForm ms-5 me-auto">
+        <form method="post" asp-action="@valueForAspAction">
+            <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
+            <h4 class="mt-5 ms-5 me-5">@Model.Product.Name</h4>
+            <h6 class="mb-5 mt-5 ms-5 me-5">@Model.Product.Description</h6>
+            <input type="submit" class="btn btn-sample mb-5 ms-5 me-5" value="@valueForBuyButton" />
+        </form>
+    </div>
+</div>

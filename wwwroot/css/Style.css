@@ -85,6 +85,20 @@ header .Header-buttons {
     height: auto;
     background: rgba(217, 217, 217, 0.80);
 }
+
+.AutoHeightAndWidthForm {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 75px;
+    min-width: 300px;
+    max-width: 600px;
+    min-height: 30px;
+    max-height: 500px;
+    background: rgba(217, 217, 217, 0.80);
+}
+
 .Form {
     display: flex;
     flex-flow: column;

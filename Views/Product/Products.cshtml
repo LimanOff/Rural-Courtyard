@@ -17,7 +17,7 @@
             {
                 <form class ="product-item m-3" asp-controller="Product" asp-action="ProductInfo">
                     <input name="productName" class="form-control form-control-sm" type="hidden" value="@product.Name" />
-                    <img src="/img/products/roses/@product.ImageLink" />
+                    <img src="/img/products/@product.ImageLink" />
                     <h4>@product.Name</h4>
                     <input type="submit" value="Открыть">
                 </form>
