@@ -17,7 +17,7 @@ namespace RuralCourtyard.Controllers
         public IActionResult Index() => View();
 
         [HttpGet]
-        public IActionResult Cart()
+        public IActionResult Carts()
         {
             List<Cart> carts = _context.Carts.Include(x => x.Product).ToList();
             return View(carts);

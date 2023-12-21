@@ -16,8 +16,8 @@
                 @if (Program.CurrentUser != null)
                 {
                     <div class="Header-buttons">
-                        <a> <img src="~/img/icons/Cart.svg" /> </a>
-                        <a asp-action="Favorites"> <img src="~/img/icons/Favorites.svg" /> </a>
+                        <a asp-action="Carts" asp-controller="Home"> <img src="~/img/icons/Cart.svg" /> </a>
+                        <a asp-action="Favorites" asp-controller="Home"> <img src="~/img/icons/Favorites.svg" /> </a>
                         <a class="super-a" asp-controller="Home" asp-action="Categories">Категории</a>
                         <a class="super-a" asp-controller="Home" asp-action="Contacts">Контакты</a>
                         <a asp-controller="Account" asp-action="LogOut"> <img class="LogOut-button" src="~/img/icons/LogOut.png" /> </a>

@@ -7,8 +7,8 @@
     var carts = Model.Context.Carts.ToList();
     var favorites = Model.Context.Favorites.ToList();
 
-    bool isInCart = carts.FirstOrDefault(x => x.Product == Model.Product) != null;
-    bool isInFavorites = favorites.FirstOrDefault(x => x.Product == Model.Product) != null;
+    bool isInCart = carts.FirstOrDefault(x => x.Product.Id == Model.Product.Id) != null;
+    bool isInFavorites = favorites.FirstOrDefault(x => x.Product.Id == Model.Product.Id) != null;
 
     string valueForBuyButton = isInCart ? "Удалить из корзины" : "Добавить в корзину";
     string valueForAspAction = isInCart ? "RemoveFromCart" : "AddToCart";
