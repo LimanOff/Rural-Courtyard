@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RuralCourtyard.Models.Infrastructure;
 using RuralCourtyard.Views.ProductController;
+using System.Collections;
 
 namespace RuralCourtyard.Controllers
 {
@@ -126,6 +127,17 @@ namespace RuralCourtyard.Controllers
                 Product = product
             };
             return View("ProductInfo", productInfoModel);
+        }
+
+        public IActionResult BuyProduct()
+        {
+            foreach (var entity in _context.Carts)
+            {
+                _context.Carts.Remove(entity);
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("Cart","Home");
         }
     }
 }

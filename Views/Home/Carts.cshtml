@@ -1,0 +1,35 @@
+﻿@using RuralCourtyard.Models.Infrastructure;
+@model List<Cart>
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Корзина";
+}
+<div class="Body">
+    <div class="UpBody">
+        <form method="post" asp-controller="Product" asp-action="SearchProduct">
+            <input class="form-control" name="productName" type="text" />
+            <input type="image" src="/img/icons/Magnifying-glass.svg" />
+        </form>
+    </div>
+    <div class="OtherBody">
+        <div class="products">
+            @foreach (var product1 in Model)
+            {
+                <form class="product-item m-3" asp-controller="Product" asp-action="ProductInfo">
+                    @{
+                        Product product = product1.Product;
+                    }
+                    <input name="productName" class="form-control form-control-sm" type="hidden" value="@product.Name" />
+                    <img src="/img/products/@product.ImageLink" />
+                    <h4>@product.Name</h4>
+                    <h4>@product.Cost.ToString("0 руб")</h4>
+                    <input type="submit" value="Открыть">
+                </form>
+            }
+        </div>
+    </div>
+    <div class="DownBody">
+        <input asp-action="BuyProduct" asp-controller="Product" value="Купить" class="btn btn-sample" />
+    </div>
+</div>
