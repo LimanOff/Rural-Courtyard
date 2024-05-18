@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
+using System.Reflection;
+
 namespace RuralCourtyard.Models.Infrastructure
 {
     public class DatabaseContext : DbContext
@@ -12,7 +14,9 @@ namespace RuralCourtyard.Models.Infrastructure
         public DbSet<Cart> Carts { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-            ParsingDataToProducts("products.csv");
+            Database.EnsureCreated();
+
+            ParsingDataToProducts("products.txt");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,7 +34,8 @@ namespace RuralCourtyard.Models.Infrastructure
 
         private void ParsingDataToProducts(string nameOfFile)
         {
-            string path = @$"../RuralCourtyard/DataForParsing/Products/{nameOfFile}";
+            string rootPath = AppDomain.CurrentDomain.BaseDirectory;
+            string path = rootPath + @$"\DataForParsing\Products\{nameOfFile}";
 
             var lines = File.ReadAllLines(path).Select(x => x.Trim()).ToList();
 
@@ -42,15 +47,13 @@ namespace RuralCourtyard.Models.Infrastructure
 
                 Product p = new Product()
                 {
-                    Id = Int32.Parse(columns[0]),
                     CategoryId = Int32.Parse(columns[1]),
-                    Name = columns[2],
-                    Description = columns[3],
+                    Name = columns[2].ToString(),
+                    Description = columns[3].ToString(),
                     Color = columns[4],
                     ImageLink = columns[5],
                     Cost = Decimal.Parse(columns[6])
                 };
-
                 Products.Add(p);
             }
 

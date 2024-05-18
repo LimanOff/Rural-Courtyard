@@ -6,7 +6,7 @@
 }
 <div class="Body">
     <div class="UpBody">
-          <form method="post" asp-controller="Product" asp-action="SearchProduct">
+          <form method="post" asp-controller="Product" asp-action="SearchProductInProducts">
               <input class="form-control" name="productName" type="text"/>
               <input type="image" src="/img/icons/Magnifying-glass.svg"/>
           </form> 
@@ -17,9 +17,9 @@
             {
                 <form class ="product-item m-3" asp-controller="Product" asp-action="ProductInfo">
                     <input name="productName" class="form-control form-control-sm" type="hidden" value="@product.Name" />
-                    <img src="/img/products/@product.ImageLink" />
+                    <img src="@product.ImageLink" style="border-radius: 10px;"/>
                     <h4>@product.Name</h4>
-                    <input type="submit" value="Открыть">
+                    <input class="btn btn-sample" type="submit" value="Открыть" style="border-radius: 10px;">
                 </form>
             }
         </div>

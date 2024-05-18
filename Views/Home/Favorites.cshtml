@@ -7,7 +7,7 @@
 }
 <div class="Body">
     <div class="UpBody">
-        <form method="post" asp-controller="Product" asp-action="SearchProduct">
+        <form method="post" asp-controller="Product" asp-action="SearchProductInFavorites">
             <input class="form-control" name="productName" type="text" />
             <input type="image" src="/img/icons/Magnifying-glass.svg" />
         </form>
@@ -20,8 +20,14 @@
                     @{
                         Product product = product1.Product;
                     }
+
+                    <input asp-controller="Product" asp-action="RemoveFromFavoriteFromFavoritePage"
+                        class="redcrossfavorite"
+                        type="image" width="30" height="30"
+                           src="https://cdn4.iconfinder.com/data/icons/eldorado-basic/40/delete-1024.png">
+
                     <input name="productName" class="form-control form-control-sm" type="hidden" value="@product.Name" />
-                    <img src="/img/products/@product.ImageLink" />
+                    <img src="@product.ImageLink" />
                     <h4>@product.Name</h4>
                     <input type="submit" value="Открыть">
                 </form>

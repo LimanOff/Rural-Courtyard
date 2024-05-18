@@ -7,10 +7,10 @@
         <link rel="icon" type="image/x-icon" href="/img/icons/Logo.png">
     </head>
     <body>
-        <div class="Grid">
+        <div class="Grid backgroundOfBody">
             <header>
                 <div class="Header-title">
-                        <h1 class="TitleOfStore">Сельский дворик</h1>
+                    <a asp-controller="Home" asp-action="Index"><h1 class="TitleOfStore">Сельский дворик</h1></a>
                 </div>
 
                 @if (Program.CurrentUser != null)
@@ -26,6 +26,8 @@
                 else
                 {
                     <div class="Header-buttons">
+                        <a class="super-a" asp-controller="Home" asp-action="Categories">Категории</a>
+                        <a class="super-a" asp-controller="Home" asp-action="Contacts">Контакты</a>
                         <a asp-controller="Account" asp-action="LogIn"> <input class="btn btn-sample" type="button" value="Войти" /> </a>
                     </div>
                 }
@@ -36,7 +38,7 @@
             </div>
 
             <footer>
-                <h5>Copyright 2023 - 2023 Алина Позова. Все права защищены.</h5>
+                <h5>Copyright 2023 - 2024 Алина Позова. Все права защищены.</h5>
             </footer>
         </div>
     </body>

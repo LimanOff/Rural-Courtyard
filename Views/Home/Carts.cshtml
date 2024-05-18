@@ -4,10 +4,15 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Корзина";
+    decimal sum = 0;
+
+    int productQuantityInCart = -1;
+
+    List<Product> previousProducts = new List<Product>(Model.Count);
 }
 <div class="Body">
     <div class="UpBody">
-        <form method="post" asp-controller="Product" asp-action="SearchProduct">
+        <form method="post" asp-controller="Product" asp-action="SearchProductInCarts">
             <input class="form-control" name="productName" type="text" />
             <input type="image" src="/img/icons/Magnifying-glass.svg" />
         </form>
@@ -16,20 +21,61 @@
         <div class="products">
             @foreach (var product1 in Model)
             {
-                <form class="product-item m-3" asp-controller="Product" asp-action="ProductInfo">
-                    @{
-                        Product product = product1.Product;
-                    }
-                    <input name="productName" class="form-control form-control-sm" type="hidden" value="@product.Name" />
-                    <img src="/img/products/@product.ImageLink" />
-                    <h4>@product.Name</h4>
-                    <h4>@product.Cost.ToString("0 руб")</h4>
-                    <input type="submit" value="Открыть">
-                </form>
+                Product currentProduct = product1.Product;
+                sum += currentProduct.Cost;
+                productQuantityInCart = Model.Where(x => x.Product == currentProduct)
+                .ToList()
+                .Count;
+
+                if (previousProducts.Contains(currentProduct))
+                {
+                    continue;
+                }
+                else
+                {
+                    previousProducts.Add(currentProduct);
+                }
+
+                <div class="product-item m-3">
+                    <img src="@currentProduct.ImageLink" class="cartsProductImage" />
+                    <h4>@currentProduct.Name</h4>
+                    <h4>@currentProduct.Cost.ToString("0 руб")</h4>
+
+                    <div class="addtocart text-center">
+                        <form method="post" >
+                            <input name="productName" class="form-control form-control-sm" type="hidden" value="@currentProduct.Name" />
+                            <input asp-controller ="Product" asp-action="RemoveFromCartFromCartPage" type="submit" class="btn btn-sample ms-5 me-5" value="-" />
+                        </form>
+
+                        <h3>@productQuantityInCart</h3>
+
+                        <form method="post" asp-controller="Product" asp-action="AddToCartFromCartPage">
+                            <input name="productName" class="form-control form-control-sm" type="hidden" value="@currentProduct.Name" />
+                            <input type="submit" class="btn btn-sample ms-5 me-5" value="+" />
+                        </form>
+                    </div>
+
+                    <div class="addtocart text-center">
+                        <form asp-controller="Product" asp-action="ProductInfo">
+                            <input name="productName" class="form-control form-control-sm" type="hidden" value="@currentProduct.Name" />
+                            <input type="submit" value="Открыть">
+                        </form>
+                    </div>
+                </div>
             }
         </div>
     </div>
-    <div class="DownBody">
-        <input asp-action="BuyProduct" asp-controller="Product" value="Купить" class="btn btn-sample" />
+    <div class="DownBody text-center">
+        <h6>Общая сумма: @sum ₽</h6>
+
+        <input class="mb-3 text-center" type="text" placeholder="Оставьте имя для связи"></input>
+        <input class="mb-2 text-center" style="width: 250px;" type="number" placeholder="Оставьте телефон для связи"></input>
+
+        <div class="addtocart">
+            <label>Согласие на обработку персональных данных</label>
+            <input type="checkbox" />
+        </div>
+
+        <a asp-action="BuyProduct" asp-controller="Product"><input type="button" value="Отправить заявку" class="btn btn-sample" /></a>
     </div>
 </div>

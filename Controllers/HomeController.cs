@@ -8,6 +8,9 @@ namespace RuralCourtyard.Controllers
     {
         private readonly DatabaseContext _context;
 
+        public static List<Cart> StaticCarts;
+        public static List<Favorites> StaticFavorites;
+
         public HomeController(DatabaseContext context)
         {
             _context = context;
@@ -24,10 +27,29 @@ namespace RuralCourtyard.Controllers
         }
 
         [HttpGet]
+        public IActionResult CartsWith()
+        {
+            if (StaticCarts.Count != 0)
+                return View("Carts", StaticCarts);
+            else
+                return RedirectToAction("Carts");
+        }
+
+
+        [HttpGet]
         public IActionResult Favorites()
         {
             List<Favorites> favorites = _context.Favorites.Include(x => x.Product).ToList();
             return View(favorites);
+        }
+
+        [HttpGet]
+        public IActionResult FavoritesWith()
+        {
+            if (StaticFavorites.Count != 0)
+                return View("Favorites", StaticFavorites);
+            else
+                return RedirectToAction("Favorites");
         }
 
         [HttpGet]

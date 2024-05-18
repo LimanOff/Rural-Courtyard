@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RuralCourtyard.Models.Infrastructure;
 using RuralCourtyard.Views.ProductController;
-using System.Collections;
 
 namespace RuralCourtyard.Controllers
 {
@@ -30,11 +27,35 @@ namespace RuralCourtyard.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchProduct(string productName)
+        public IActionResult SearchProductInProducts(string productName)
         {
             List<Product> products = _context.Products.Where(p => p.Name.Contains(productName))
-                                                        .ToList();
+                                                      .ToList();
             return View("Products", products);
+        }
+
+        [HttpPost]
+        public IActionResult SearchProductInCarts(string productName)
+        {
+            List<Cart> carts = _context.Carts.Include(cart => cart.Product)
+                                                .Where(cart => cart.Product.Name.Contains(productName))
+                                                .ToList();
+
+            HomeController.StaticCarts = carts;
+
+            return RedirectToAction("CartsWith", "Home", carts);
+        }
+
+        [HttpPost]
+        public IActionResult SearchProductInFavorites(string productName)
+        {
+            List<Favorites> favorites = _context.Favorites.Include(f => f.Product)
+                                                        .Where(f => f.Product.Name.Contains(productName))
+                                                        .ToList();
+
+            HomeController.StaticFavorites = favorites;
+
+            return RedirectToAction("FavoritesWith", "Home", favorites);
         }
 
         [HttpPost]
@@ -73,6 +94,22 @@ namespace RuralCourtyard.Controllers
             return View("ProductInfo", productInfoModel);
         }
 
+        public IActionResult AddToCartFromCartPage(string productName)
+        {
+            var product = _context.Products.First(p => p.Name == productName);
+
+            Cart newCart = new Cart()
+            {
+                Product = product,
+                UserId = Program.CurrentUser.Id
+            };
+
+            _context.Carts.Add(newCart);
+            _context.SaveChanges();
+
+            return RedirectToAction("Carts", "Home");
+        }
+
         public IActionResult RemoveFromCart(string productName)
         {
             var product = _context.Products.First(p => p.Name == productName);
@@ -88,6 +125,18 @@ namespace RuralCourtyard.Controllers
                 Product = product
             };
             return View("ProductInfo", productInfoModel);
+        }
+
+        public IActionResult RemoveFromCartFromCartPage(string productName)
+        {
+            var product = _context.Products.First(p => p.Name == productName);
+
+            Cart cart = _context.Carts.FirstOrDefault(x => x.Product == product);
+
+            _context.Carts.Remove(cart);
+            _context.SaveChanges();
+
+            return RedirectToAction("Carts", "Home");
         }
 
         public IActionResult AddToFavorite(string productName)
@@ -129,6 +178,18 @@ namespace RuralCourtyard.Controllers
             return View("ProductInfo", productInfoModel);
         }
 
+        public IActionResult RemoveFromFavoriteFromFavoritePage(string productName)
+        {
+            var product = _context.Products.First(p => p.Name == productName);
+
+            Favorites favorite = _context.Favorites.FirstOrDefault(x => x.Product == product);
+
+            _context.Favorites.Remove(favorite);
+            _context.SaveChanges();
+
+            return RedirectToAction("Favorites", "Home");
+        }
+
         public IActionResult BuyProduct()
         {
             foreach (var entity in _context.Carts)
@@ -137,7 +198,8 @@ namespace RuralCourtyard.Controllers
             }
 
             _context.SaveChanges();
-            return RedirectToAction("Cart","Home");
+
+            return RedirectToAction("Carts","Home");
         }
     }
 }

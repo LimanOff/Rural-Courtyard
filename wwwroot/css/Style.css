@@ -6,7 +6,8 @@
 
 body {
     background-image: url("../img/background-images/Background.png");
-    background-size: initial;
+    background-attachment: fixed;
+    background-size: cover; 
 }
 
 .Grid {
@@ -22,6 +23,9 @@ body {
 }
 .GridBody {
     grid-area: body;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 footer {
@@ -62,10 +66,19 @@ header .Header-buttons {
     justify-content: center;
 }
 .Header-buttons * {
-    margin-right: 50px;
+    margin-right: 20px;
 }
 .Header-buttons img {
     width: 40px;
+}
+
+.Body > img {
+    width: 450px;
+}
+
+.productInfoImage {
+    width: 150px;
+    height: 340px;
 }
 
 .RegAuthForm {
@@ -135,6 +148,7 @@ header .Header-buttons {
 
 .UpBody{
     display: inline-block;
+    margin-bottom: 150px;
 }
 .UpBody > form{
     display: inline-flex;
@@ -146,7 +160,11 @@ header .Header-buttons {
     align-items: center;
 }
 .DownBody {
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 150px;
 }
 
 .btn-sample {
@@ -228,6 +246,22 @@ span{
     align-items: center;
 }
 
-.product-item > img{
+    .product-item > img {
+        width: 150px;
+    }
+
+.cartsProductImage {
     width: 150px;
+    height: 130px;
+}
+
+.addtocart {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.redcrossfavorite{
+    margin-left: 150px;
 }

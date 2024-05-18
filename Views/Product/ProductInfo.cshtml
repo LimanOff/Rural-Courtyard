@@ -6,42 +6,70 @@
     var carts = Model.Context.Carts.ToList();
     var favorites = Model.Context.Favorites.ToList();
 
-    bool isInCart = carts.FirstOrDefault(x => x.Product.Id == Model.Product.Id) != null;
-    bool isInFavorites = favorites.FirstOrDefault(x => x.Product.Id == Model.Product.Id) != null;
+    bool isInCart = carts.FirstOrDefault(x => x.Product == Model.Product) != null;
+    bool isInFavorites = favorites.FirstOrDefault(x => x.Product == Model.Product) != null;
 
-    string valueForBuyButton = isInCart ? "Удалить из корзины" : "Добавить в корзину";
-    string valueForAspAction = isInCart ? "RemoveFromCart" : "AddToCart";
+    int productQuantityInCart = carts.Where(x => x.Product == Model.Product)
+                                        .ToList()
+                                            .Count;
 }
 <div class="IndexBody">
     <div class="Body m-auto me-5">
         <input type="image" src="/img/icons/Back.svg" onclick="window.history.go(-1); return false;" />
-        @if (isInFavorites)
+        @if (Program.CurrentUser != null)
         {
-            <form asp-action="RemoveFromFavorite">
-                <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
-                <input type="image" src="/img/icons/Fill-Heart.svg" />
-            </form>
-        }
-        else
-        {
-            <form asp-action="AddToFavorite">
-                <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
-                <input type="image" src="/img/icons/Empty-Heart.svg" />
-            </form>
+            @if (isInFavorites)
+            {
+                <form asp-action="RemoveFromFavorite">
+                    <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
+                    <input type="image" src="/img/icons/Fill-Heart.svg" />
+                </form>
+            }
+            else
+            {
+                <form asp-action="AddToFavorite">
+                    <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
+                    <input type="image" src="/img/icons/Empty-Heart.svg" />
+                </form>
+            }
         }
     </div>
-    <div class="Body">
-        <img src="~/img/products/@Model.Product.ImageLink" />
+    <div class="Body mt-2">
+        <img src="@Model.Product.ImageLink" class="productInfoImage"/>
         <div class="AutoHeightAndWidthForm mt-5">
             <h5>Цена: @Model.Product.Cost.ToString("0 рублей")</h5>
         </div>
     </div>
-    <div class="AutoHeightAndWidthForm ms-5 me-auto">
-        <form method="post" asp-action="@valueForAspAction">
-            <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
-            <h4 class="mt-5 ms-5 me-5">@Model.Product.Name</h4>
-            <h6 class="mb-5 mt-5 ms-5 me-5">@Model.Product.Description</h6>
-            <input type="submit" class="btn btn-sample mb-5 ms-5 me-5" value="@valueForBuyButton" />
-        </form>
+    <div class="AutoHeightAndWidthForm ms-5 me-auto text-center">
+
+        <h4 class="mt-5 ms-5 me-5">@Model.Product.Name</h4>
+        <h6 class="mb-5 mt-5 ms-5 me-5">@Model.Product.Description</h6>
+
+        @if (Program.CurrentUser != null)
+        {
+            if (!isInCart)
+            {
+                <form method="post" asp-action="AddToCart">
+                    <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
+                    <input type="submit" class="btn btn-sample mb-5 ms-5 me-5" value="Добавить в корзину" />
+                </form>
+            }
+            else
+            {
+                <div class="addtocart text-center">
+                    <form method="post" asp-action="RemoveFromCart">
+                        <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
+                        <input type="submit" class="btn btn-sample ms-5 me-5" value="-" />
+                    </form>
+
+                    <h3>@productQuantityInCart</h3>
+
+                    <form method="post" asp-action="AddToCart">
+                        <input name="productName" class="form-control form-control-sm" type="hidden" value="@Model.Product.Name" />
+                        <input type="submit" class="btn btn-sample ms-5 me-5" value="+" />
+                    </form>
+                </div>
+            }
+        }
     </div>
 </div>
