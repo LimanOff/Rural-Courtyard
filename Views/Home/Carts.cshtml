@@ -10,6 +10,25 @@
 
     List<Product> previousProducts = new List<Product>(Model.Count);
 }
+<script src="https://unpkg.com/imask"></script>
+
+<script>
+    function showAlert() {
+        alert("Ваша заявка была отправлена, в скором времени с вами свяжуться.");
+    }
+
+    function initializePhoneNumber() {
+        var element = document.getElementById('phone');
+
+        var maskOptions = {
+            mask: '+7(000)000-00-00',
+            lazy: false
+        }
+
+        var mask = new IMask(element, maskOptions);
+    }
+</script>
+
 <div class="Body">
     <div class="UpBody">
         <form method="post" asp-controller="Product" asp-action="SearchProductInCarts">
@@ -42,9 +61,9 @@
                     <h4>@currentProduct.Cost.ToString("0 руб")</h4>
 
                     <div class="addtocart text-center">
-                        <form method="post" >
+                        <form method="post">
                             <input name="productName" class="form-control form-control-sm" type="hidden" value="@currentProduct.Name" />
-                            <input asp-controller ="Product" asp-action="RemoveFromCartFromCartPage" type="submit" class="btn btn-sample ms-5 me-5" value="-" />
+                            <input asp-controller="Product" asp-action="RemoveFromCartFromCartPage" type="submit" class="btn btn-sample ms-5 me-5" value="-" />
                         </form>
 
                         <h3>@productQuantityInCart</h3>
@@ -69,13 +88,17 @@
         <h6>Общая сумма: @sum ₽</h6>
 
         <input class="mb-3 text-center" type="text" placeholder="Оставьте имя для связи"></input>
-        <input class="mb-2 text-center" style="width: 250px;" type="number" placeholder="Оставьте телефон для связи"></input>
+        <input class="mb-2 text-center" style="width: 250px;" type="text" name="phone" id="phone" placeholder="Оставьте телефон для связи"></input>
 
         <div class="addtocart">
             <label>Согласие на обработку персональных данных</label>
             <input type="checkbox" />
         </div>
 
-        <a asp-action="BuyProduct" asp-controller="Product"><input type="button" value="Отправить заявку" class="btn btn-sample" /></a>
+        <a asp-action="BuyProduct" asp-controller="Product"><input type="button" onclick="showAlert()" value="Отправить заявку" class="btn btn-sample" /></a>
     </div>
 </div>
+
+<script>
+    initializePhoneNumber();
+</script>
