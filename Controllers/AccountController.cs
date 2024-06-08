@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RuralCourtyard.Models.Extensions;
 using RuralCourtyard.Models.Infrastructure;
 
 namespace RuralCourtyard.Controllers
@@ -40,6 +41,14 @@ namespace RuralCourtyard.Controllers
                                                                              x.Password == user.Password);
                     return GoToIndex();
                 }
+                else
+                {
+                    this.AddAlertError("Ошибка регистрации.\nТакой пользователь уже зарегистрирован.");
+                }
+            }
+            else
+            {
+                this.AddAlertError("Ошибка регистрации.\nОдно из полей для ввода логина и пароля пусты.\nЗаполните поля.");
             }
             return View();
         }
@@ -60,7 +69,16 @@ namespace RuralCourtyard.Controllers
                     Program.CurrentUser = user;
                     return GoToIndex();
                 }
+                else
+                {
+                    this.AddAlertError("Ошибка входа.\nТакого пользователя не существует.");
+                }
             }
+            else
+            {
+                this.AddAlertError("Ошибка входа.\nОдно из полей для ввода логина и пароля пусты.\nЗаполните поля.");
+            }
+
             return View();
         }
 

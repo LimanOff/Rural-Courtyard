@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using RuralCourtyard.Models;
+using RuralCourtyard.Models.Extensions;
 using RuralCourtyard.Models.Infrastructure;
+using RuralCourtyard.ViewModels;
 using RuralCourtyard.Views.ProductController;
 
 namespace RuralCourtyard.Controllers
@@ -20,11 +24,24 @@ namespace RuralCourtyard.Controllers
             if (category != null)
             {
                 List<Product> products = _context.Products.Include(p => p.Category)
-                                                        .Where(p => p.Category == category)
-                                                        .ToList();
+                                                            .Where(p => p.Category == category)
+                                                                .ToList()
+                                                                    .DistinctBy(p => p.Name)
+                                                                        .ToList();
+
                 return View(products);
             }
             return View(new List<Product>().DefaultIfEmpty<Product>());
+        }
+
+        public IActionResult AllProducts()
+        {
+            List<Product> products = _context.Products.Include(p => p.Category)
+                                                            .ToList()
+                                                                .DistinctBy(p => p.Name)
+                                                                    .ToList();
+
+            return View("Products", products);
         }
 
         [HttpPost]
@@ -191,16 +208,43 @@ namespace RuralCourtyard.Controllers
             return RedirectToAction("Favorites", "Home");
         }
 
-        public IActionResult BuyProduct()
+        public IActionResult BuyProduct(CartsViewModel cartsViewModel)
         {
-            foreach (var entity in _context.Carts)
+            if (_context.Carts.Count() != 0)
             {
-                _context.Carts.Remove(entity);
+                if (!cartsViewModel.Name.IsNullOrEmpty())
+                {
+                    if (!cartsViewModel.Phone.IsNullOrEmpty()
+                        &&
+                        !cartsViewModel.Phone.Contains("+7(___)___-__-__")
+                        &&
+                        cartsViewModel.IsPhoneNumberFullWrite())
+                    {
+                        foreach (var entity in _context.Carts)
+                        {
+                            _context.Carts.Remove(entity);
+                        }
+
+                        _context.SaveChanges();
+
+                        this.AddAlertSuccess("Заявка была сформирована.\nВ ближайшее время мы свяжемся с вами.");
+                    }
+                    else
+                    {
+                        this.AddAlertError("Заявка не сформирована.\nПоле с вашим номером телефона пусто.\nЗаполните поле.");
+                    }
+                }
+                else
+                {
+                    this.AddAlertError("Заявка не сформирована.\nПоле с вашим именем пусто.\nЗаполните поле.");
+                }
+            }
+            else
+            {
+                this.AddAlertError("Заявка не сформирована.\nВ корзине ничего не находится.\n Добавьте товары в корзину.");
             }
 
-            _context.SaveChanges();
-
-            return RedirectToAction("Carts","Home");
+            return RedirectToAction("Carts", "Home");
         }
     }
 }

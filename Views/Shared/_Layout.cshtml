@@ -2,9 +2,11 @@
     <html>
     <head>
         <title> @ViewBag.Title | Сельский дворик</title>
+        <meta charset="utf-8" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/Style.css" />
         <link rel="icon" type="image/x-icon" href="/img/icons/Logo.png">
+        <script src="/js/alert.js" charset="utf-8"></script>
     </head>
     <body>
         <div class="Grid backgroundOfBody">
@@ -18,7 +20,7 @@
                     <div class="Header-buttons">
                         <a asp-action="Carts" asp-controller="Home"> <img src="~/img/icons/Cart.svg" /> </a>
                         <a asp-action="Favorites" asp-controller="Home"> <img src="~/img/icons/Favorites.svg" /> </a>
-                        <a class="super-a" asp-controller="Home" asp-action="Categories">Категории</a>
+                        <a class="super-a" asp-controller="Product" asp-action="AllProducts">Каталог</a>
                         <a class="super-a" asp-controller="Home" asp-action="Contacts">Контакты</a>
                         <a asp-controller="Account" asp-action="LogOut"> <img class="LogOut-button" src="~/img/icons/LogOut.png" /> </a>
                     </div>
@@ -26,13 +28,12 @@
                 else
                 {
                     <div class="Header-buttons">
-                        <a class="super-a" asp-controller="Home" asp-action="Categories">Категории</a>
+                        <a class="super-a" asp-controller="Product" asp-action="AllProducts">Каталог</a>
                         <a class="super-a" asp-controller="Home" asp-action="Contacts">Контакты</a>
                         <a asp-controller="Account" asp-action="LogIn"> <input class="btn btn-sample" type="button" value="Войти" /> </a>
                     </div>
                 }
             </header>
-
             <div class="GridBody">
                 @RenderBody()
             </div>

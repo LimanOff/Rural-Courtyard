@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RuralCourtyard.Models.Infrastructure;
+using RuralCourtyard.ViewModels;
 
 namespace RuralCourtyard.Controllers
 {
@@ -23,14 +24,21 @@ namespace RuralCourtyard.Controllers
         public IActionResult Carts()
         {
             List<Cart> carts = _context.Carts.Include(x => x.Product).ToList();
-            return View(carts);
+
+            return View(new CartsViewModel()
+            {
+                Carts = carts
+            });
         }
 
         [HttpGet]
         public IActionResult CartsWith()
         {
             if (StaticCarts.Count != 0)
-                return View("Carts", StaticCarts);
+                return View("Carts", new CartsViewModel()
+                {
+                    Carts = StaticCarts
+                });
             else
                 return RedirectToAction("Carts");
         }

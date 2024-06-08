@@ -1,5 +1,6 @@
 ﻿@using RuralCourtyard.Models.Infrastructure;
-@model List<Cart>
+@using RuralCourtyard.ViewModels;
+@model CartsViewModel
 
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
@@ -8,41 +9,27 @@
 
     int productQuantityInCart = -1;
 
-    List<Product> previousProducts = new List<Product>(Model.Count);
+    List<Product> previousProducts = new List<Product>(Model.Carts.Count);
 }
 <script src="https://unpkg.com/imask"></script>
 
-<script>
-    function showAlert() {
-        alert("Ваша заявка была отправлена, в скором времени с вами свяжуться.");
-    }
-
-    function initializePhoneNumber() {
-        var element = document.getElementById('phone');
-
-        var maskOptions = {
-            mask: '+7(000)000-00-00',
-            lazy: false
-        }
-
-        var mask = new IMask(element, maskOptions);
-    }
-</script>
-
 <div class="Body">
     <div class="UpBody">
-        <form method="post" asp-controller="Product" asp-action="SearchProductInCarts">
+        <form method="post" class="CenterOfBody" asp-controller="Product" asp-action="SearchProductInCarts">
             <input class="form-control" name="productName" type="text" />
             <input type="image" src="/img/icons/Magnifying-glass.svg" />
         </form>
     </div>
+    <alerts>
+
+    </alerts>
     <div class="OtherBody">
         <div class="products">
-            @foreach (var product1 in Model)
+            @foreach (var product1 in Model.Carts)
             {
                 Product currentProduct = product1.Product;
                 sum += currentProduct.Cost;
-                productQuantityInCart = Model.Where(x => x.Product == currentProduct)
+                productQuantityInCart = Model.Carts.Where(x => x.Product == currentProduct)
                 .ToList()
                 .Count;
 
@@ -77,7 +64,7 @@
                     <div class="addtocart text-center">
                         <form asp-controller="Product" asp-action="ProductInfo">
                             <input name="productName" class="form-control form-control-sm" type="hidden" value="@currentProduct.Name" />
-                            <input type="submit" value="Открыть">
+                            <input type="submit" class="btn-sample lead" value="Открыть">
                         </form>
                     </div>
                 </div>
@@ -85,20 +72,54 @@
         </div>
     </div>
     <div class="DownBody text-center">
-        <h6>Общая сумма: @sum ₽</h6>
+        <form asp-action="BuyProduct" asp-controller="Product" class="DownBody text-center">
+            <h6>Общая сумма: @sum ₽</h6>
 
-        <input class="mb-3 text-center" type="text" placeholder="Оставьте имя для связи"></input>
-        <input class="mb-2 text-center" style="width: 250px;" type="text" name="phone" id="phone" placeholder="Оставьте телефон для связи"></input>
+            <input asp-for="Name" id="nameId" class="mb-3 text-center" type="text" placeholder="Оставьте имя для связи" />
+            <input asp-for="Phone" id="phoneId" class="mb-2 text-center" style="width: 250px;" type="text" placeholder="Оставьте телефон для связи" />
 
-        <div class="addtocart">
-            <label>Согласие на обработку персональных данных</label>
-            <input type="checkbox" />
-        </div>
+            <div class="addtocart">
+                <label>Согласие на обработку персональных данных</label>
+                <input id="checkBoxId" type="checkbox" />
+            </div>
 
-        <a asp-action="BuyProduct" asp-controller="Product"><input type="button" onclick="showAlert()" value="Отправить заявку" class="btn btn-sample" /></a>
+            <input id="sendRequestButton" type="submit" disabled value="Отправить заявку" class="btn btn-sample" />
+        </form>
     </div>
 </div>
 
 <script>
+    var sendRequestButton = document.getElementById("sendRequestButton");
+
+    function showBuyAlert() {
+        alert("Ваша заявка была отправлена, в скором времени с вами свяжуться.");
+    }
+
+    function showAlert(textToDisplay) {
+        alert(textToDisplay);
+    }
+
+    function initializePhoneNumber() {
+        var element = document.querySelector("#phoneId");
+
+        var maskOptions = {
+            mask: '+7(000)000-00-00',
+            lazy: false
+        }
+
+        var mask = new IMask(element, maskOptions);
+    }
+
+    function onCheckBoxChecked() {
+        if (sendRequestButton.hasAttribute("disabled")) {
+            sendRequestButton.removeAttribute("disabled");
+        }
+        else {
+            sendRequestButton.setAttribute("disabled", "disabled");
+        }
+    }
+
+    document.querySelector("#checkBoxId").addEventListener("change", onCheckBoxChecked);
+
     initializePhoneNumber();
 </script>
