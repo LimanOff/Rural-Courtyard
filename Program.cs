@@ -24,6 +24,9 @@ namespace RuralCourtyard
 
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddSession();
+            builder.Services.AddMvc();
+
             var app = builder.Build();
 
             app.UseStaticFiles();
