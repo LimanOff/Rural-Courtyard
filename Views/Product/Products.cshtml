@@ -1,28 +1,34 @@
-﻿@model List<RuralCourtyard.Models.Infrastructure.Product>
+﻿@model RuralCourtyard.ViewModels.ProductsViewModel
 
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Продукты";
+
+    Model.Categories.Add(new RuralCourtyard.Models.Infrastructure.Category() { Name = "Все продукты" });
 }
 <div class="Body">
     <div class="UpBody">
         <div class="CenterOfBody">
+
+            <form method="post" asp-controller="Product" asp-action="Products" name="formWithSelection">
+                @Html.DropDownList("nameOfCategory", new SelectList(Model.Categories.Select(c => c.Name), "Все продукты"), new { id = "selection" })
+            </form>
+
             <form method="post" class="CenterOfBody" asp-controller="Product" asp-action="SearchProductInProducts">
                 <input class="form-control" name="productName" type="text" />
                 <input type="image" src="/img/icons/Magnifying-glass.svg" />
             </form>
         </div>
-          <div class="LeftOfBody">
-            
-          </div>
+        <div class="LeftOfBody">
+        </div>
     </div>
     <div class="OtherBody">
         <div class="products">
-            @foreach (var product in Model)
+            @foreach (var product in Model.Products)
             {
                 <form class="product-item m-3 CenterOfBody" asp-controller="Product" asp-action="ProductInfo">
                     <input name="productName" class="form-control form-control-sm" type="hidden" value="@product.Name" />
-                    <img src="@product.ImageLink" style="border-radius: 10px;"/>
+                    <img src="@product.ImageLink" style="border-radius: 10px;" />
                     <h4>@product.Name</h4>
                     <h4>@product.Cost ₽</h4>
                     <input class="btn btn-sample" type="submit" value="Открыть" style="border-radius: 10px;">
@@ -31,3 +37,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const formWithSelection = document.forms["formWithSelection"];
+        const categoriesSelect = document.getElementById('selection');
+
+        function changeOption() {
+            const selectedOption = categoriesSelect.options[categoriesSelect.selectedIndex];
+            formWithSelection.submit();
+            console.log(`You chose: ${selectedOption.text}`);
+        }
+
+        categoriesSelect.addEventListener("change", changeOption);
+    });
+</script>

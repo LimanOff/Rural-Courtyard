@@ -89,37 +89,35 @@
 </div>
 
 <script>
-    var sendRequestButton = document.getElementById("sendRequestButton");
+    document.addEventListener("DOMContentLoaded", function () {
+        var sendRequestButton = document.getElementById("sendRequestButton");
 
-    function showBuyAlert() {
-        alert("Ваша заявка была отправлена, в скором времени с вами свяжуться.");
-    }
-
-    function showAlert(textToDisplay) {
-        alert(textToDisplay);
-    }
-
-    function initializePhoneNumber() {
-        var element = document.querySelector("#phoneId");
-
-        var maskOptions = {
-            mask: '+7(000)000-00-00',
-            lazy: false
+        function showAlert(textToDisplay) {
+            alert(textToDisplay);
         }
 
-        var mask = new IMask(element, maskOptions);
-    }
+        function initializePhoneNumber() {
+            var element = document.querySelector("#phoneId");
 
-    function onCheckBoxChecked() {
-        if (sendRequestButton.hasAttribute("disabled")) {
-            sendRequestButton.removeAttribute("disabled");
+            var maskOptions = {
+                mask: '+7(000)000-00-00',
+                lazy: false
+            }
+
+            var mask = new IMask(element, maskOptions);
         }
-        else {
-            sendRequestButton.setAttribute("disabled", "disabled");
+
+        function onCheckBoxChecked() {
+            if (sendRequestButton.hasAttribute("disabled")) {
+                sendRequestButton.removeAttribute("disabled");
+            }
+            else {
+                sendRequestButton.setAttribute("disabled", "disabled");
+            }
         }
-    }
 
-    document.querySelector("#checkBoxId").addEventListener("change", onCheckBoxChecked);
+        document.querySelector("#checkBoxId").addEventListener("change", onCheckBoxChecked);
 
-    initializePhoneNumber();
+        initializePhoneNumber();
+    });
 </script>

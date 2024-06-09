@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NPOI.SS.Formula.Functions;
 using RuralCourtyard.Models;
 using RuralCourtyard.Models.Extensions;
 using RuralCourtyard.Models.Infrastructure;
@@ -17,21 +18,34 @@ namespace RuralCourtyard.Controllers
         {
             _context = context;
         }
+
+        [HttpPost]
         public IActionResult Products(string nameOfCategory)
         {
             var category = _context.Categories.FirstOrDefault(x => x.Name == nameOfCategory);
 
             if (category != null)
             {
-                List<Product> products = _context.Products.Include(p => p.Category)
+                if (category.Name != "Все продукты")
+                {
+                    List<Product> products = _context.Products.Include(p => p.Category)
                                                             .Where(p => p.Category == category)
                                                                 .ToList()
                                                                     .DistinctBy(p => p.Name)
                                                                         .ToList();
 
-                return View(products);
+                    return View(new ProductsViewModel()
+                    {
+                        Products = products,
+                        Categories = _context.Categories.ToList()
+                    });
+                }
             }
-            return View(new List<Product>().DefaultIfEmpty<Product>());
+            return View(new ProductsViewModel()
+            {
+                Products = _context.Products.ToList(),
+                Categories = _context.Categories.ToList()
+            });
         }
 
         public IActionResult AllProducts()
@@ -41,7 +55,11 @@ namespace RuralCourtyard.Controllers
                                                                 .DistinctBy(p => p.Name)
                                                                     .ToList();
 
-            return View("Products", products);
+            return View("Products", new ProductsViewModel()
+            {
+                Products = products,
+                Categories = _context.Categories.ToList()
+            });
         }
 
         [HttpPost]
@@ -49,7 +67,11 @@ namespace RuralCourtyard.Controllers
         {
             List<Product> products = _context.Products.Where(p => p.Name.Contains(productName))
                                                       .ToList();
-            return View("Products", products);
+            return View("Products", new ProductsViewModel()
+            {
+                Products = products,
+                Categories = _context.Categories.ToList()
+            });
         }
 
         [HttpPost]
