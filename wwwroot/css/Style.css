@@ -41,10 +41,6 @@ body {
     margin-bottom: 150px;
 }
 
-    .UpBody > form {
-        display: inline-block;
-    }
-
 select {
     margin-right: 50px;
 }
