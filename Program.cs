@@ -18,7 +18,7 @@ namespace RuralCourtyard
             RootFolder = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString()).ToString()).ToString()).ToString();
             var builder = WebApplication.CreateBuilder(args);
 
-            string dbConnectionString = builder.Configuration.GetConnectionString(DbHomeConnection);
+            string dbConnectionString = builder.Configuration.GetConnectionString(DbHAKVTConnection);
 
             builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(dbConnectionString));
 
