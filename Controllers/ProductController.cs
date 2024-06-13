@@ -65,8 +65,9 @@ namespace RuralCourtyard.Controllers
         [HttpPost]
         public IActionResult SearchProductInProducts(string productName)
         {
-            List<Product> products = _context.Products.Where(p => p.Name.Contains(productName))
+            List<Product> products = _context.Products.Where(p => EF.Functions.Like(p.Name, $"%{productName}%"))
                                                       .ToList();
+
             return View("Products", new ProductsViewModel()
             {
                 Products = products,

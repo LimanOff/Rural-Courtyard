@@ -5,6 +5,7 @@
     ViewBag.Title = "Продукты";
 
     Model.Categories.Add(new RuralCourtyard.Models.Infrastructure.Category() { Name = "Все продукты" });
+    Model.Products = Model.Products.DistinctBy(p => p.Name).ToList();
 }
 <div class="Body">
     <div class="UpBody">
